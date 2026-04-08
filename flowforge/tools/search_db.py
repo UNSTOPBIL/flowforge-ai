@@ -9,7 +9,10 @@ from __future__ import annotations
 
 from typing import Any
 
-from tools.base_tool import BaseTool
+try:
+    from flowforge.tools.base_tool import BaseTool
+except ImportError:
+    from base_tool import BaseTool
 
 
 class SearchDBTool(BaseTool):

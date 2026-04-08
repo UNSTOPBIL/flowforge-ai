@@ -36,6 +36,25 @@ class FlowForgeGrader:
         score = len(valid_completed) / len(total_set)
         return min(1.0, max(0.0, score))
 
+    def compute_score_with_efficiency(self, completed_objectives: list[str], total_objectives: list[str], steps_used: int, max_steps: int) -> float:
+        """Compute the completion score with an efficiency bonus.
+
+        Args:
+            completed_objectives: List of objective names that were completed.
+            total_objectives: List of all objective names for the task.
+            steps_used: Number of steps used.
+            max_steps: Maximum allowed steps.
+
+        Returns:
+            Score between 0.0 and 1.0. Efficiency bonus raises the score but is capped at 1.0.
+        """
+        base_score = self.compute_score(completed_objectives, total_objectives)
+        if base_score < 1.0:
+            return base_score
+        efficiency_bonus = max(0.0, 1.0 - (steps_used / max(1, max_steps)))
+        # Keep base at 1.0 max, return exactly 1.0 in case we want to separate bonus logic
+        return min(1.0, base_score + efficiency_bonus)
+
     def is_success(self, score: float) -> bool:
         """Determine if the score represents full success.
 

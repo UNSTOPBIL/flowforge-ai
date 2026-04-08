@@ -7,15 +7,18 @@ All three objectives must be completed to finish the task.
 
 from __future__ import annotations
 
-from models import FlowForgeState
+try:
+    from flowforge.models import FlowForgeAction, FlowForgeObservation, FlowForgeState
+except ImportError:
+    from models import FlowForgeState
 
 
 class HardTask:
     """Hard-level task: read a file, run a query, and send an email."""
 
     task_id = "hard"
-    description = "Read a report file, run a database query for analysis, and send the results via email"
-    objectives = ["read_file", "run_query", "send_email"]
+    description = "Read a report file, run a database query for analysis, schedule a review meeting, and send the results via email"
+    objectives = ["read_file", "run_query", "schedule_meeting", "send_email"]
 
     def get_objectives(self) -> list[str]:
         """Return the list of task objectives."""
@@ -35,6 +38,8 @@ class HardTask:
             completed.append("read_file")
         if state.intermediate_data.get("query_done"):
             completed.append("run_query")
+        if state.intermediate_data.get("meeting_scheduled"):
+            completed.append("schedule_meeting")
         if state.intermediate_data.get("email_sent"):
             completed.append("send_email")
         return completed

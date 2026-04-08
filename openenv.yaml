@@ -1,0 +1,16 @@
+name: flowforge-ai
+version: "1.0.0"
+description: "An OpenEnv environment where LLM agents learn real-world workflow automation through tool interaction and reward-driven feedback."
+entry_point: "flowforge.env:FlowForgeEnvironment"
+action_model: "flowforge.models:FlowForgeAction"
+observation_model: "flowforge.models:FlowForgeObservation"
+tasks:
+  - id: easy
+    description: "Search the database to find an employee by name or department"
+    difficulty: easy
+  - id: medium
+    description: "Find an employee in the database and send them an email notification"
+    difficulty: medium
+  - id: hard
+    description: "Read a report file, run a database query for analysis, schedule a review meeting, and send results via email"
+    difficulty: hard

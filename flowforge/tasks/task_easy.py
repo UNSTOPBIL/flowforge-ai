@@ -1,21 +1,23 @@
 """
-FlowForge AI - Medium Task
+FlowForge AI - Easy Task
 
-Task requiring the agent to find an employee and send them an email.
-Objectives must be completed in order.
+Simple task requiring the agent to find an employee in the database.
 """
 
 from __future__ import annotations
 
-from models import FlowForgeState
+try:
+    from flowforge.models import FlowForgeAction, FlowForgeObservation, FlowForgeState
+except ImportError:
+    from models import FlowForgeState
 
 
-class MediumTask:
-    """Medium-level task: find an employee and send them an email."""
+class EasyTask:
+    """Easy-level task: find an employee in the database."""
 
-    task_id = "medium"
-    description = "Find an employee in the database and send them an email notification"
-    objectives = ["find_employee", "send_email"]
+    task_id = "easy"
+    description = "Search the database to find an employee by name or department"
+    objectives = ["find_employee", "read_employee_data"]
 
     def get_objectives(self) -> list[str]:
         """Return the list of task objectives."""
@@ -33,6 +35,6 @@ class MediumTask:
         completed = []
         if state.intermediate_data.get("employee_found"):
             completed.append("find_employee")
-        if state.intermediate_data.get("email_sent"):
-            completed.append("send_email")
+        if state.intermediate_data.get("employee_data_read"):
+            completed.append("read_employee_data")
         return completed

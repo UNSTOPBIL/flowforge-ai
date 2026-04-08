@@ -9,7 +9,10 @@ from __future__ import annotations
 
 from typing import Any
 
-from tools.base_tool import BaseTool
+try:
+    from flowforge.tools.base_tool import BaseTool
+except ImportError:
+    from base_tool import BaseTool
 
 
 class ReadFileTool(BaseTool):
@@ -21,9 +24,9 @@ class ReadFileTool(BaseTool):
 
     # Simulated in-memory file system
     _file_system: dict[str, str] = {
-        "/reports/sales_summary.txt": "Sales Report\nTotal Sales: $525.00\nRegions: US, EU",
-        "/reports/complaints_summary.txt": "Complaints Summary\nOpen: 2\nResolved: 0",
-        "/reports/analysis.txt": "Regional Analysis\nUnderperforming: EU",
+        "/reports/sales_summary.txt": "Sales Report\nTotal Sales: $525.00\nRegions: US, EU\nEmployee Count: 42",
+        "/reports/complaints_summary.txt": "Complaints Summary\nOpen: 2\nResolved: 0\nEmployees Involved: 5",
+        "/reports/analysis.txt": "Regional Analysis\nUnderperforming: EU\nTop Performer: John Smith",
         "/data/customers.csv": "id,name,email,region\n1,Alice,alice@example.com,US\n2,Bob,bob@example.com,EU",
         "/data/sales.csv": "id,product,amount,region,date\n1,Widget A,150.00,US,2026-01-15\n2,Widget B,200.00,EU,2026-01-16",
     }
