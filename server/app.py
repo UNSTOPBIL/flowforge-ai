@@ -22,6 +22,19 @@ def create_app():
 
 app = create_app()
 
+@app.get("/")
+def index():
+    return {
+        "status": "online",
+        "environment": "flowforge-ai",
+        "version": "1.0.0",
+        "docs": "/docs"
+    }
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
 def main():
     uvicorn.run(app, host="0.0.0.0", port=7860)
 
