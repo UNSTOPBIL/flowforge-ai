@@ -8,3 +8,14 @@ dist/
 build/
 .env
 *.zip
+
+# Testing & Utilities
+interactive_sim.py
+judge_sim.py
+train_sim.py
+validate-submission.sh
+deploy_to_hf.py
+submission_test.log
+pyproject.toml
+uv.lock
+tests/
