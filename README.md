@@ -35,12 +35,29 @@ FlowForge simulates actual back-office operations where LLM agents act as automa
 
 ## ⚙️ How it Works
 
-<div align="center">
-  <img src="assets/hero.png" alt="FlowForge AI Architecture Hub" width="800">
-  <p><i>Figure 1: High-fidelity visualization of the AI-powered Enterprise Workflow Hub.</i></p>
-</div>
+```mermaid
+graph TD
+    A[LLM Agent] -->|Action JSON| B(FlowForge Environment)
+    B -->|Validation| C{Valid Tool?}
+    C -- No --> D[Error Observation + Negative Reward]
+    C -- Yes --> E[Execute Tool]
+    E --> F(State Tracker)
+    F -->|Objective Check| G{Task Complete?}
+    G -- Yes --> H[Success Observation + Finish Reward]
+    G -- No --> I[Result Observation + Progress Reward]
+    D --> A
+    I --> A
+    H --> J((Episode End))
+    
+    classDef default fill:#1f2937,stroke:#3b82f6,stroke-width:2px,color:#f3f4f6;
+    classDef logic fill:#374151,stroke:#f59e0b,stroke-width:2px,color:#f3f4f6;
+    classDef success fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#d1fae5;
+    classDef fail fill:#7f1d1d,stroke:#ef4444,stroke-width:2px,color:#fee2e2;
 
-FlowForge operates as a stateful Reinforcement Learning environment where an LLM Agent interacts with a set of enterprise tools. The agent's actions are validated, executed, and scored based on task-aware objectives, providing dense feedback for training or evaluation.
+    class C,G logic;
+    class H success;
+    class D fail;
+```
 
 ---
 
