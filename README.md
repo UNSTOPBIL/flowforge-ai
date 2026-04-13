@@ -9,8 +9,6 @@ app_port: 7860
 
 <div align="center">
 
-# 🔧 FlowForge AI
-
 **An OpenEnv-compatible Reinforcement Learning environment for Enterprise Workflow Automation.**
 
 [![OpenEnv Compatible](https://img.shields.io/badge/OpenEnv-Compatible-brightgreen)](https://huggingface.co/spaces/open-env/validator)
@@ -24,7 +22,6 @@ FlowForge simulates actual back-office operations where LLM agents act as automa
 ---
 
 ## ✨ Key Features
-
 - **Genuine Enterprise Operations**: Move beyond toy environments. Agents read files, search employee databases, run SQL queries, schedule meetings, and send emails.
 - **Strictly Defined Action Space**: Validated entirely via Pydantic — preventing hallucinatory tool calls.
 - **Task-Aware Reward Shaping**: Dense reward signals that adapt based on the task (e.g., `read_file` is crucial for hard tasks, but optional for easy ones).
@@ -34,7 +31,6 @@ FlowForge simulates actual back-office operations where LLM agents act as automa
 ---
 
 ## ⚙️ How it Works
-
 ```mermaid
 graph TD
     A[LLM Agent] -->|Action JSON| B(FlowForge Environment)
@@ -61,10 +57,7 @@ graph TD
 
 ---
 
-## 🚀 Quickstart
-
 ### Local Setup
-
 ```bash
 # Set up a virtual environment
 python -m venv .venv
@@ -78,7 +71,6 @@ python inference.py
 ```
 
 ### Docker Deployment
-
 ```bash
 # Build the image
 docker build -t flowforge-ai .
@@ -90,7 +82,6 @@ docker run -p 7860:7860 --cpus=2 --memory=8g flowforge-ai
 ---
 
 ## 📊 Environment Specifications
-
 <details>
 <summary><strong>1. Action Space</strong></summary>
 
@@ -137,7 +128,6 @@ Defined via the `FlowForgeObservation` Pydantic model:
 ---
 
 ## 📈 Base Performance
-
 Evaluated using the rule-based baseline agent `inference.py` (guarantees perfect task compliance without LLM hallucination).
 
 | Task Difficulty | Objectives | Baseline Score (0-1.0) |
@@ -149,7 +139,6 @@ Evaluated using the rule-based baseline agent `inference.py` (guarantees perfect
 ---
 
 ## 📁 Repository Structure
-
 ```text
 FlowForge/
 ├── inference.py              # Main inference entry point

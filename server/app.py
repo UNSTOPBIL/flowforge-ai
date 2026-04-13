@@ -53,9 +53,18 @@ async def reset_override(data: dict = Body(default={})):
     finally:
         env.close()
 
-# Insert the override at the beginning of routes to ensure it takes precedence
+@app.post("/step")
+async def step_override(data: dict = Body(...)):
+    """Override for the step endpoint with verbose logging for validation debugging."""
+    print(f"DEBUG: Received step action: {data}")
+    # We fallback to the standard internal handler through the env integration
+    # This is just a tap to ensure we see exactly what the validator sends
+    return await next(r for r in app.routes if isinstance(r, APIRoute) and r.path == "/step" and r.endpoint != step_override).endpoint(data)
+
+# Insert overrides at the beginning of routes
 from fastapi.routing import APIRoute
 app.routes.insert(0, next(r for r in app.routes if isinstance(r, APIRoute) and r.endpoint == reset_override))
+app.routes.insert(0, next(r for r in app.routes if isinstance(r, APIRoute) and r.endpoint == step_override))
 
 @app.get("/health")
 def health():

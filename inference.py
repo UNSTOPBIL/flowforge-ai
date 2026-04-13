@@ -89,6 +89,7 @@ REMAINING STEPS: {obs.state_summary.get("remaining_steps", "unknown")}
 
 Think step-by-step, then provide the JSON action.
 """
+    import re
     try:
         response = client.chat.completions.create(
             model=model_name,
@@ -98,12 +99,16 @@ Think step-by-step, then provide the JSON action.
         )
         content = response.choices[0].message.content.strip()
         
-        # Strip potential markdown code blocks if the model hallucinates them
-        if content.startswith("```"):
-            content = content.replace("```json", "").replace("```", "").strip()
+        # Robust JSON extraction: Find the first '{' and the last '}'
+        json_match = re.search(r'\{.*\}', content, re.DOTALL)
+        if json_match:
+            content = json_match.group(0)
             
         return json.loads(content)
-    except Exception:
+    except Exception as e:
+        # Log parsing failure specifically if it was an extraction issue
+        if "client" in locals() and model_name != "rule-based":
+             print(f"DEBUG: LLM parsing failed: {str(e)}")
         # Silently fail and fallback to deterministic sequence for stability
         return None
 
@@ -176,9 +181,14 @@ def main():
     env = FlowForgeEnvironment()
     grader = FlowForgeGrader()
     
-    api_key = os.environ.get("HF_TOKEN") or os.environ.get("OPENAI_API_KEY")
+    # Prioritize hackathon-specific environment variables for compliance
+    api_key = os.environ.get("API_KEY") or os.environ.get("OPENAI_API_KEY") or os.environ.get("HF_TOKEN")
     api_base = os.environ.get("API_BASE_URL")
-    model_name = os.environ.get("MODEL_NAME", "rule-based")
+    
+    # If a proxy URL is detected, we MUST use an actual model to ensure API calls are recorded
+    # by the LiteLLM proxy. Falling back to rule-based would cause Phase 2 validation to fail.
+    default_model = "gpt-3.5-turbo" if api_base else "rule-based"
+    model_name = os.environ.get("MODEL_NAME", default_model)
     
     # Initialize OpenAI client for hackathon compliance
     # Using dummy key if no environment variable is provided to ensure stable execution
@@ -186,7 +196,7 @@ def main():
     client = OpenAI(api_key=api_key, base_url=api_base)
     
     if api_key != "sk-placeholder-for-compliance":
-        print(f"Inference client initialized (Model: {model_name})")
+        print(f"Inference client initialized (Model: {model_name}, Base: {api_base or 'OpenAI Default'})")
     else:
         print("Inference client initialized in baseline mode (no active API calls).")
 

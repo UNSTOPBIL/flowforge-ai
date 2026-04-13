@@ -14,3 +14,17 @@ tasks:
   - id: hard
     description: "Read a report file, run a database query for analysis, schedule a review meeting, and send results via email"
     difficulty: hard
+
+tools:
+  - name: search_db
+    description: "Search the internal database for employee or service information. Parameters: [query: str]"
+  - name: send_email
+    description: "Send a simulated email notification. Parameters: [to: str, subject: str, body: str]"
+  - name: read_file
+    description: "Read the full content of internal report documents. Parameters: [file_path: str]"
+  - name: run_query
+    description: "Execute structured SQL SELECT queries on the relational database. Parameters: [query: str]"
+  - name: schedule_meeting
+    description: "Create a new entry in the team calendar. Parameters: [attendees: list, date: str, title: str]"
+  - name: finish
+    description: "Signal completion of the current task objectives. Parameters: []"

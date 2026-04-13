@@ -16,6 +16,4 @@ train_sim.py
 validate-submission.sh
 deploy_to_hf.py
 submission_test.log
-pyproject.toml
-uv.lock
 tests/
