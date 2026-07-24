@@ -1,12 +1,3 @@
----
-title: FlowForge AI
-emoji: 🔧
-colorFrom: blue
-colorTo: indigo
-sdk: docker
-app_port: 7860
----
-
 <div align="center">
 
 **An OpenEnv-compatible Reinforcement Learning environment for Enterprise Workflow Automation.**
