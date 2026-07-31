@@ -3,7 +3,6 @@
 **An OpenEnv-compatible Reinforcement Learning environment for Enterprise Workflow Automation.**
 
 [![OpenEnv Compatible](https://img.shields.io/badge/OpenEnv-Compatible-brightgreen)](https://huggingface.co/spaces/open-env/validator)
-[![Meta PyTorch Hackathon](https://img.shields.io/badge/Meta%20PyTorch-Hackathon%202024-blue)](https://huggingface.co/open-env)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-blue.svg)](https://www.python.org/)
 
 FlowForge simulates actual back-office operations where LLM agents act as automated HR/operations assistants, learning to synthesize information, manage tools, and recover from real-world errors.
